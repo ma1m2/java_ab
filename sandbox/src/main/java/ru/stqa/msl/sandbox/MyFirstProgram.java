@@ -14,11 +14,11 @@ public class MyFirstProgram {
 
     Point p1 = new Point(1,1);
     Point p2 = new Point(5,6);
-    System.out.printf("Distance between two points is %.2f \n", p1.distance(p1,p2));
+    System.out.printf("Distance between two points is %.2f \n", p1.distance(p2));
 
     p1 = new Point(2,1);
     p2 = new Point(4,20);
-    System.out.printf("Distance between two points is %.2f \n", p1.distance(p1,p2));
+    System.out.printf("Distance between two points is %.2f \n", p1.distance(p2));
   }
 
   private static void hello(String somebody){
