@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.*;
+import ru.stqa.msl.addressbook.model.ContactData;
 
 import static org.openqa.selenium.OutputType.*;
 
@@ -22,6 +23,10 @@ public class ContactDeletionTests extends TestBase {
   @Test
   public void testContactDeletion() {
     app.getNavigationHelper().goToHomePage();
+    if (!app.getContactHelper().isThareAContact()){
+      app.getContactHelper().creatContact(new ContactData("Ru", "Ruru",
+              "+73339993118", "test113@mail.ru", "test1"), true);
+    }
     app.getContactHelper().selectContact();
     app.getContactHelper().deleteSelectedContact();
     app.getContactHelper().closeAlert();
