@@ -6,5 +6,5 @@ repositories {
 
 dependencies {
     compile 'org.testng:testng:6.11'
-    compile 'org.seleniumhq.selenium:selenium-java:3.5.3'
+    compile 'org.seleniumhq.selenium:selenium-java:3.6.0'
 }
