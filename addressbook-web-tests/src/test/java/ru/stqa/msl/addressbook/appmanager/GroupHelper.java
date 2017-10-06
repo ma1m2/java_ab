@@ -2,7 +2,6 @@ package ru.stqa.msl.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.msl.addressbook.model.GroupData;
 
 public class GroupHelper extends HelperBase{
@@ -33,10 +32,8 @@ public class GroupHelper extends HelperBase{
     click(By.name("delete"));
   }
 
-  public void selectGroups() {
-      if (!wd.findElement(By.name("selected[]")).isSelected()) {
-        click(By.name("selected[]"));
-      }
+  public void selectGroups(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void initGroupModification() {
