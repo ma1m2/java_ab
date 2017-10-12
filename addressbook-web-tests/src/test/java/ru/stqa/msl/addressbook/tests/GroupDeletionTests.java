@@ -1,6 +1,5 @@
 package ru.stqa.msl.addressbook.tests;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.msl.addressbook.model.GroupData;
