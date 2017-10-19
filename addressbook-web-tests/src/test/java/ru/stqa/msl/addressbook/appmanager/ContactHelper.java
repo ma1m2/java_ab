@@ -3,10 +3,14 @@ package ru.stqa.msl.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.msl.addressbook.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -70,5 +74,19 @@ public class ContactHelper extends HelperBase {
     fillContactForm(contactData, creation);
     submitContactCreation();
     returnToHomePage();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<>();
+    //List<WebElement> elements = wd.findElements(By.name("entry")); It works well!
+    List<WebElement> elements = wd.findElements(By.cssSelector("tr[name=entry]"));//It's nice selector too.
+    for (WebElement el : elements){
+      int id = Integer.parseInt(el.findElement(By.tagName("input")).getAttribute("value"));
+      String firstName = el.findElement(By.xpath("./td[3]")).getText();//How is it correct "//" or "/"?
+      String lastName = el.findElement(By.xpath("./td[2]")).getText();
+      ContactData contact = new ContactData(id,firstName,lastName, "test1");
+      contacts.add(contact);
+    }
+    return contacts;
   }
 }
