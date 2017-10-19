@@ -27,7 +27,7 @@ public class ContactDeletionTests extends TestBase {
       app.getContactHelper().creatContact(new ContactData(1,"Ru", "Ruru",
               "+73339993118", "test113@mail.ru", "test1"), true);
     }
-    app.getContactHelper().selectContact();
+    app.getContactHelper().selectContact(1);
     app.getContactHelper().deleteSelectedContact();
     app.getContactHelper().closeAlert();
   }

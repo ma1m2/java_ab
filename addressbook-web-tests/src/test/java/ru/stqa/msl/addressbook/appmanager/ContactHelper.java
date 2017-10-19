@@ -39,10 +39,11 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void selectContact() {
-    if (!wd.findElement(By.name("selected[]")).isSelected()) {
+  public void selectContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
+/*    if (!wd.findElement(By.name("selected[]")).isSelected()) {
       wd.findElement(By.name("selected[]")).click();
-    }
+    }*/
   }
 
   public void deleteSelectedContact() {
@@ -53,8 +54,9 @@ public class ContactHelper extends HelperBase {
     wd.switchTo().alert().accept();
   }
 
-  public void initContactModification() {
-    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+  public void initContactModification(int index) {
+    wd.findElements(By.name("entry")).get(index).findElement(By.xpath("./td[8]/a/img")).click();
+    //click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
   }
 
   public void submitContactModification() {
