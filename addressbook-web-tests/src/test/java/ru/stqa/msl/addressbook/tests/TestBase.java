@@ -2,22 +2,24 @@ package ru.stqa.msl.addressbook.tests;
 
 import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import ru.stqa.msl.addressbook.appmanager.ApplicationManager;
 
 
 public class TestBase {
 
-  protected final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);
+  protected static final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);
   //protected final ApplicationManager app = new ApplicationManager(BrowserType.IE);
   //protected final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
 
-  @BeforeMethod
+  @BeforeSuite
   public void setUp() throws Exception {
     app.init();
   }
 
-  @AfterMethod
+  @AfterSuite
   public void tearDown() {
     app.stop();
   }
