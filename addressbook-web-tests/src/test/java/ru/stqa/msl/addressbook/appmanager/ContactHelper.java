@@ -71,14 +71,14 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("home page"));
   }
 
-  public void creatContact(ContactData contactData, boolean creation) {
+  public void creat(ContactData contactData, boolean creation) {
     initContactCreation();
     fillContactForm(contactData, creation);
     submitContactCreation();
     returnToHomePage();
   }
 
-  public List<ContactData> getContactList() {
+  public List<ContactData> list() {
     List<ContactData> contacts = new ArrayList<>();
     //List<WebElement> elements = wd.findElements(By.name("entry")); It works well!
     List<WebElement> elements = wd.findElements(By.cssSelector("tr[name=entry]"));//It's nice selector too.

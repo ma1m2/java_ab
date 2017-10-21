@@ -11,21 +11,21 @@ public class ContactModificationTests extends TestBase{
 
   @Test(enabled = false)
   public void testContactModification(){
-    app.goTo().goToHomePage();
-    if (!app.getContactHelper().isThareAContact()){
-      app.getContactHelper().creatContact(new ContactData(1,"Vu", "Vuru",
+    app.goTo().homePage();
+    if (!app.contact().isThareAContact()){
+      app.contact().creat(new ContactData(1,"Vu", "Vuru",
               "+72229993118", "test222@mail.ru", "test1"), true);
     }
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().selectContact(before.size()-1);
-    app.getContactHelper().initContactModification(before.size()-1);
+    List<ContactData> before = app.contact().list();
+    app.contact().selectContact(before.size()-1);
+    app.contact().initContactModification(before.size()-1);
     ContactData contact = new ContactData(before.get(before.size()-1).getId()
             ,"Yy", "Yyyy",  null);
-    app.getContactHelper().fillContactForm(contact, false);
-    app.getContactHelper().submitContactModification();
-    app.getContactHelper().returnToHomePage();
+    app.contact().fillContactForm(contact, false);
+    app.contact().submitContactModification();
+    app.contact().returnToHomePage();
 
-    List<ContactData> after = app.getContactHelper().getContactList();
+    List<ContactData> after = app.contact().list();
     before.remove(before.size()-1);
     before.add(contact);
     Comparator<ContactData> byId = (o1, o2) -> Integer.compare(o1.getId(),o2.getId());
