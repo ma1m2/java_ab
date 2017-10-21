@@ -1,18 +1,15 @@
 package ru.stqa.msl.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.msl.addressbook.model.GroupData;
 import ru.stqa.msl.addressbook.model.Groups;
-
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase{
 
-  @Test
+  @Test(enabled = false)
   public void testGroupCreation() {
     app.goTo().groupPage();
     Groups before = app.group().all();
@@ -24,5 +21,19 @@ public class GroupCreationTests extends TestBase{
     //Assert.assertEquals(after, before);
     assertThat(after, equalTo(before.withAdded(group
             .withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
+  }
+
+  @Test
+  public void testGroupNotCreation() {
+    app.goTo().groupPage();
+    Groups before = app.group().all();
+    GroupData group = new GroupData().withName("test60'");//Апостров- запрещенный символ, группа не создается.
+    app.group().create(group);
+    assertThat(app.group().count(), equalTo(before.size()));
+    Groups after = app.group().all();
+
+
+    //Assert.assertEquals(after, before);
+    assertThat(after, equalTo(before));
   }
 }
