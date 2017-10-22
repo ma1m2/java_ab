@@ -6,12 +6,9 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.msl.addressbook.model.GroupData;
 import ru.stqa.msl.addressbook.model.Groups;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GroupHelper extends HelperBase {
-
 
   public GroupHelper(WebDriver wd) {
     super(wd);
@@ -19,6 +16,15 @@ public class GroupHelper extends HelperBase {
 
   public void returnToGroupPage() {
     click(By.linkText("group page"));
+  }
+
+  public void groupPage() {
+    if (isElementPresent(By.tagName("h1"))
+            && wd.findElement(By.tagName("h1")).getText().equals("Groups")
+            && isElementPresent(By.name("new"))) {
+      return;
+    }
+    click(By.linkText("groups"));
   }
 
   public void submitGroupCreation() {
@@ -53,6 +59,17 @@ public class GroupHelper extends HelperBase {
 
   public boolean isThereAGroup() {
     return isElementPresent(By.name("selected[]"));
+  }
+
+  public boolean isThereGroupName(String groupName) {
+    groupPage();
+    List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
+    for (WebElement element : elements){
+      if (element.getText().equals(groupName)){
+        return true;
+      }
+    }
+    return false;
   }
 
   public void create(GroupData groupData) {

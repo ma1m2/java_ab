@@ -1,10 +1,8 @@
 package ru.stqa.msl.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.msl.addressbook.model.ContactData;
@@ -71,11 +69,33 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("home page"));
   }
 
+  public void homePage() {
+    if (isElementPresent(By.id("maintable"))){
+      return;
+    }
+    click(By.linkText("home"));
+  }
+
   public void creat(ContactData contactData, boolean creation) {
     initContactCreation();
     fillContactForm(contactData, creation);
     submitContactCreation();
     returnToHomePage();
+  }
+
+  public void modify(int index, ContactData contact) {
+    selectContact(index);
+    initContactModification(index);
+    fillContactForm(contact, false);
+    submitContactModification();
+    returnToHomePage();
+  }
+
+  public void delete(int index) {
+    selectContact(index);
+    deleteSelectedContact();
+    closeAlert();
+    homePage();
   }
 
   public List<ContactData> list() {
@@ -86,7 +106,8 @@ public class ContactHelper extends HelperBase {
       int id = Integer.parseInt(el.findElement(By.tagName("input")).getAttribute("value"));
       String firstName = el.findElement(By.xpath("./td[3]")).getText();//How is it correct "//" or "/"?
       String lastName = el.findElement(By.xpath("./td[2]")).getText();
-      ContactData contact = new ContactData(id,firstName,lastName, "test1");
+      ContactData contact = new ContactData()
+              .withId(id).withFirstName(firstName).withLastName(lastName).withGroup("test1");
       contacts.add(contact);
     }
     return contacts;

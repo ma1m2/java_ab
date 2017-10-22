@@ -23,7 +23,7 @@ public class GroupCreationTests extends TestBase{
             .withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
   }
 
-  @Test
+  @Test(enabled = false)
   public void testGroupNotCreation() {
     app.goTo().groupPage();
     Groups before = app.group().all();
