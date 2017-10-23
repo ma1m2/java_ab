@@ -76,6 +76,10 @@ public class ContactHelper extends HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
+  public int count(){
+    return wd.findElements(By.name("selected[]")).size();
+  }
+
   public void returnToHomePage() {
     click(By.linkText("home page"));
   }
@@ -91,6 +95,7 @@ public class ContactHelper extends HelperBase {
     initContactCreation();
     fillContactForm(contactData, creation);
     submitContactCreation();
+    contactCache = null;
     returnToHomePage();
   }
 
@@ -99,6 +104,7 @@ public class ContactHelper extends HelperBase {
     initContactModification(index);
     fillContactForm(contact, false);
     submitContactModification();
+    contactCache = null;
     returnToHomePage();
   }
 
@@ -107,6 +113,7 @@ public class ContactHelper extends HelperBase {
     initContactModificationById(contact.getId());
     fillContactForm(contact, false);
     submitContactModification();
+    contactCache = null;
     returnToHomePage();
   }
 
@@ -114,6 +121,7 @@ public class ContactHelper extends HelperBase {
   public void delete(int index) {
     selectContact(index);
     deleteSelectedContact();
+    contactCache = null;
     closeAlert();
     homePage();
   }
@@ -121,22 +129,29 @@ public class ContactHelper extends HelperBase {
   public void delete(ContactData contact) {
     selectContactById(contact.getId());
     deleteSelectedContact();
+    contactCache = null;
     closeAlert();
     homePage();
   }
 
+  private Contacts contactCache = null;
+
   public Contacts all() {
-    Contacts contacts = new Contacts();
+    if (contactCache != null){
+      return new Contacts(contactCache);//берем копию кэша, если он уже есть
+    }
+    contactCache = new Contacts();
     List<WebElement> elements = wd.findElements(By.cssSelector("tr[name=entry]"));
     for (WebElement el : elements){
       int id = Integer.parseInt(el.findElement(By.tagName("input")).getAttribute("value"));
       String firstName = el.findElement(By.xpath("./td[3]")).getText();
       String lastName = el.findElement(By.xpath("./td[2]")).getText();
+      //String group = wd.findElement(By.xpath(String.format("//select[@name='group'][.//option[@value='%s']]","47"))).getText();
       ContactData contact = new ContactData()
               .withId(id).withFirstName(firstName).withLastName(lastName).withGroup("test1");
-      contacts.add(contact);
+      contactCache.add(contact);
     }
-    return contacts;
+    return new Contacts(contactCache);
   }
 
   public List<ContactData> list() {
