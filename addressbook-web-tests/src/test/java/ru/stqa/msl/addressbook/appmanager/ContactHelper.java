@@ -147,14 +147,17 @@ public class ContactHelper extends HelperBase {
       return new Contacts(contactCache);//берем копию кэша, если он уже есть
     }
     contactCache = new Contacts();
-    List<WebElement> elements = wd.findElements(By.cssSelector("tr[name=entry]"));
-    for (WebElement el : elements){
-      int id = Integer.parseInt(el.findElement(By.tagName("input")).getAttribute("value"));
-      String firstName = el.findElement(By.xpath("./td[3]")).getText();
-      String lastName = el.findElement(By.xpath("./td[2]")).getText();
-      //String group = wd.findElement(By.xpath(String.format("//select[@name='group'][.//option[@value='%s']]","47"))).getText();
+    List<WebElement> rows = wd.findElements(By.cssSelector("tr[name=entry]"));
+    for (WebElement row : rows){
+      List<WebElement> cells = row.findElements(By.tagName("td"));
+      int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
+      String firstName = cells.get(2).getText();
+      String lastName = cells.get(1).getText();
+      String allPhones = cells.get(5).getText();
+      String[] phones = allPhones.split("\n");
       ContactData contact = new ContactData()
-              .withId(id).withFirstName(firstName).withLastName(lastName).withGroup("test1");
+              .withId(id).withFirstName(firstName).withLastName(lastName).withGroup("test1")
+              .withHome(phones[0]).withMobile(phones[1]).withWork(phones[2]);
       contactCache.add(contact);
     }
     return new Contacts(contactCache);
