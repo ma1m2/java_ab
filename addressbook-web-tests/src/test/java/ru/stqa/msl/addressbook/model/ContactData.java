@@ -1,5 +1,7 @@
 package ru.stqa.msl.addressbook.model;
 
+import java.io.File;
+
 public class ContactData {
   private int id = Integer.MAX_VALUE;
   private String firstName;
@@ -14,6 +16,7 @@ public class ContactData {
   private String allEmail;
   private String address;
   private String group;
+  private File photo;
 
   public ContactData withId(int id) {
     this.id = id;
@@ -80,6 +83,11 @@ public class ContactData {
     return this;
   }
 
+  public ContactData withPhoto(File photo) {
+    this.photo = photo;
+    return this;
+  }
+
   public int getId() {
     return id;
   }
@@ -130,6 +138,10 @@ public class ContactData {
 
   public String getGroup() {
     return group;
+  }
+
+  public File getPhoto() {
+    return photo;
   }
 
   @Override

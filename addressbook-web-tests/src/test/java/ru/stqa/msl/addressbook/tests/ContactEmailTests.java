@@ -28,7 +28,7 @@ public class ContactEmailTests extends TestBase{
     }
   }
 
-  @Test
+  @Test(enabled = false)
   public void testContactEmail(){
     app.goTo().homePage();
     ContactData contact = app.contact().all().iterator().next();
