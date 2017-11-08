@@ -3,6 +3,7 @@ package ru.stqa.msl.addressbook.gentrators;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.thoughtworks.xstream.XStream;
 import ru.stqa.msl.addressbook.model.GroupData;
 
 import java.io.File;
@@ -18,6 +19,8 @@ public class GroupDataGenerator {
   public int count;
   @Parameter (names = "-f", description = "Target file")
   public String file;
+  @Parameter (names = "-d", description = "Data format")
+  public String format;
 
   public static void main(String[] args) throws IOException {
     GroupDataGenerator generator = new GroupDataGenerator();
@@ -32,11 +35,26 @@ public class GroupDataGenerator {
   }
 
   private void run() throws IOException {
-    List<GroupData> groups = gentrateGroups(count);
-    save(groups, new File(file));
+    List<GroupData> groups = generateGroups(count);
+    if (format.equals("csv")){
+      saveAsCsv(groups, new File(file));
+    }else if (format.equals("xml")){
+      saveAsXml(groups, new File(file));
+    }else {
+      System.out.println("Unrecognized format " + format);
+    }
   }
 
-  private void save(List<GroupData> groups, File file) throws IOException {
+  private void saveAsXml(List<GroupData> groups, File file) throws IOException {
+    XStream xstream = new XStream();
+    xstream.processAnnotations(GroupData.class);
+    String xml = xstream.toXML(groups);
+    Writer writer = new FileWriter(file);
+    writer.write(xml);
+    writer.close();
+  }
+
+  private void saveAsCsv(List<GroupData> groups, File file) throws IOException {
     System.out.println(new File(".").getAbsolutePath());
     Writer writer = new FileWriter(file);
     for (GroupData group: groups) {
@@ -46,7 +64,7 @@ public class GroupDataGenerator {
 
   }
 
-  private List<GroupData> gentrateGroups(int count) {
+  private List<GroupData> generateGroups(int count) {
     List <GroupData> groups = new ArrayList<>();
     for (int i=0; i < count; i++){
       groups.add(new GroupData().withName(String.format("test %s", i))
