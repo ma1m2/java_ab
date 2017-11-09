@@ -15,7 +15,8 @@ import java.util.List;
 
 public class TestBase {
 
-  protected static final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);
+  protected static final ApplicationManager app
+          = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
   //protected final ApplicationManager app = new ApplicationManager(BrowserType.IE);
   //protected final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
 
