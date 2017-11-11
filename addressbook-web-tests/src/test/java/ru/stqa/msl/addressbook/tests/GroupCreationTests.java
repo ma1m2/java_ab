@@ -54,7 +54,7 @@ public class GroupCreationTests extends TestBase {
     return groups.stream().map(g -> new Object[]{g}).collect(Collectors.toList()).iterator();
   }
 
-  @Test(dataProvider = "validGroupsFromJson")
+  @Test(dataProvider = "validGroupsFromJson", enabled = false)
   public void testGroupCreation(GroupData group) {
     app.goTo().groupPage();
     Groups before = app.group().all();
@@ -77,5 +77,18 @@ public class GroupCreationTests extends TestBase {
     Groups after = app.group().all();
     //Assert.assertEquals(after, before);
     assertThat(after, equalTo(before));
+  }
+
+  @Test(dataProvider = "validGroupsFromJson")
+  public void testGroupCreationDb(GroupData group) {
+    app.goTo().groupPage();
+    Groups before = app.db().groups();
+    app.group().create(group);
+
+    assertThat(app.group().count(), equalTo(before.size() + 1));
+    Groups after = app.db().groups();
+
+    assertThat(after, equalTo(before.withAdded(group
+            .withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
   }
 }
