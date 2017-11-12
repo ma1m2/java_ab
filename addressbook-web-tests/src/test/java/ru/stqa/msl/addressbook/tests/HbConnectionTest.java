@@ -45,14 +45,20 @@ public class HbConnectionTest {
   }
 
   @Test
-  public void testHbConntctoin2(){
+  public void testHbConntctoinContact(){
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     List<ContactData> result = session.createQuery( "from ContactData where deprecated = '0000-00-00 00:00:00'" ).list();
-    for ( ContactData contact : result ) {
-      System.out.println(contact);
-    }
+/*    for ( ContactData contact : result ) {
+      System.out.println("List of contacts: " + contact);
+      System.out.println("Table of links: " + contact.getGroups());
+    }*/
     session.getTransaction().commit();
     session.close();
+    for ( ContactData contact : result ) {//чтобы работало после закрытия сессии к полю
+      // private Set<GroupData> groups добавить @ManyToMany(fetch = FetchType.EAGER)
+      System.out.println("List of contacts: " + contact);
+      System.out.println("Table of links: " + contact.getGroups());
+    }
   }
 }

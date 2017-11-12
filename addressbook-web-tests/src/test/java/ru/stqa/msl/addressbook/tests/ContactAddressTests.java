@@ -15,13 +15,13 @@ public class ContactAddressTests extends TestBase {
     app.goTo().homePage();
     if (app.contact().count()==0){
       ContactData contact = new ContactData().withFirstName("Vu").withLastName("Vuru")
-              .withGroup("test1").withAddress("Moscow city, Lenin street, block 5, ap.41");
-      if (app.group().isThereGroupName(contact.getGroup())){
+              .withAddress("Moscow city, Lenin street, block 5, ap.41");
+/*      if (app.group().isThereGroupName(contact.getGroup())){
         app.contact().creat(contact, true);
       }else {
         app.group().create(new GroupData().withName(contact.getGroup()));
         app.contact().creat(contact, true);
-      }
+      }*/
     }
   }
 

@@ -65,7 +65,7 @@ public class TestBase {
     }
   }
 
-  public void verifyContactListInUi() {
+/*  public void verifyContactListInUi() {
     if (Boolean.getBoolean("verifyUi")){
       Contacts dbContacts = app.db().contacts();
       Contacts uiContacts = app.contact().all();
@@ -75,5 +75,5 @@ public class TestBase {
               .withEmail(c.getEmail()).withEmail2(c.getEmail2()).withEmail3(c.getEmail3())
               .withAddress(c.getAddress())).collect(Collectors.toSet())));
     }
-  }
+  }*/
 }

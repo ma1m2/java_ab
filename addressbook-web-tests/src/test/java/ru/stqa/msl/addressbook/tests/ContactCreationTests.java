@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import ru.stqa.msl.addressbook.model.ContactData;
 import ru.stqa.msl.addressbook.model.Contacts;
 import ru.stqa.msl.addressbook.model.GroupData;
+import ru.stqa.msl.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,12 +39,13 @@ public class ContactCreationTests extends TestBase{
 
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreationDb(ContactData contact) {
+    Groups groups = app.db().groups();
     app.goTo().homePage();
     Contacts before = app.db().contacts();
-    if (app.group().isThereGroupName(contact.getGroup())){
+    if (app.group().isThereGroupName(contact.getGroups())){
       app.contact().creat(contact, true);
     }else {
-      app.group().create(new GroupData().withName(contact.getGroup()));
+      app.group().create(new GroupData().withName(contact.getGroups()));
       app.contact().creat(contact, true);
     }
     assertThat(app.contact().count(),equalTo(before.size()+1));

@@ -59,7 +59,7 @@ public class ContactDataGenerator {
       contacts.add(new ContactData().withFirstName("firstName " + i).withLastName("lastName " + i)
               .withHome("home " + i).withMobile("mobile " + i).withWork("work " + i)
               .withEmail("email " + i).withEmail2("email2 " + i).withEmail3("email3 " + i)
-              .withAddress("address " + i).withGroup("test " + i));
+              .withAddress("address " + i));
     }
     return contacts;
   }

@@ -17,14 +17,14 @@ public class ContactEmailTests extends TestBase{
   public void ensurePrecondition(){
     app.goTo().homePage();
     if (app.contact().count()==0){
-      ContactData contact = new ContactData().withFirstName("Vu").withLastName("Vuru").withGroup("test1")
+      ContactData contact = new ContactData().withFirstName("Vu").withLastName("Vuru")
               .withEmail("ttt@mail.ru").withEmail2("aaa@gmail.com").withEmail3("rrr@mail.ru");
-      if (app.group().isThereGroupName(contact.getGroup())){
+/*      if (app.group().isThereGroupName(contact.getGroup())){
         app.contact().creat(contact, true);
       }else {
         app.group().create(new GroupData().withName(contact.getGroup()));
         app.contact().creat(contact, true);
-      }
+      }*/
     }
   }
 

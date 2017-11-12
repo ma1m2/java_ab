@@ -29,10 +29,14 @@ public class ContactHelper extends HelperBase {
     type(By.name("address"), contactData.getAddress());
     attach(By.name("photo"), contactData.getPhoto());
 
-    if (creation){
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-    }else {
-      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    if (creation) {
+      if (contactData.getGroups().size() > 0) {
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+        new Select(wd.findElement(By.name("new_group")))
+                .selectByVisibleText(contactData.getGroups().iterator().next().getName());
+      } else {
+        Assert.assertFalse(isElementPresent(By.name("new_group")));
+      }
     }
   }
 
@@ -163,7 +167,7 @@ public class ContactHelper extends HelperBase {
       //String[] phones = allPhones.split("\n");
       ContactData contact = new ContactData()
               .withId(id).withFirstName(firstName).withLastName(lastName)
-              .withGroup("test1").withAllPhone(allPhones).withAllEmail(allEmail).withAddress(address);
+              .withAllPhone(allPhones).withAllEmail(allEmail).withAddress(address);
               //.withHome(phones[0]).withMobile(phones[1]).withWork(phones[2]);
       contactCache.add(contact);
     }
@@ -179,7 +183,7 @@ public class ContactHelper extends HelperBase {
       String firstName = el.findElement(By.xpath("./td[3]")).getText();//How is it correct "//" or "/"?
       String lastName = el.findElement(By.xpath("./td[2]")).getText();
       ContactData contact = new ContactData()
-              .withId(id).withFirstName(firstName).withLastName(lastName).withGroup("test1");
+              .withId(id).withFirstName(firstName).withLastName(lastName);
       contacts.add(contact);
     }
     return contacts;
