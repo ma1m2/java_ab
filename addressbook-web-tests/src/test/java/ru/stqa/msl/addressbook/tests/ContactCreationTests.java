@@ -37,12 +37,9 @@ public class ContactCreationTests extends TestBase{
   }
 
   @Test(dataProvider = "validContactsFromJson")
-  public void testContactCreation(ContactData contact) {
+  public void testContactCreationDb(ContactData contact) {
     app.goTo().homePage();
-    Contacts before = app.contact().all();
-/*    File photo = new File("src/test/resources/yin_yang.jpg");
-    ContactData contact = new ContactData()
-            .withFirstName("Pu").withLastName("Puru").withGroup("test1").withPhoto(photo);*/
+    Contacts before = app.db().contacts();
     if (app.group().isThereGroupName(contact.getGroup())){
       app.contact().creat(contact, true);
     }else {
@@ -50,7 +47,7 @@ public class ContactCreationTests extends TestBase{
       app.contact().creat(contact, true);
     }
     assertThat(app.contact().count(),equalTo(before.size()+1));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
 
     assertThat(after, equalTo(before
             .withAdded(contact.withId(after.stream().mapToInt((c)->c.getId()).max().getAsInt()))));
