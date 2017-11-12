@@ -24,11 +24,12 @@ public class GroupModificationTests extends TestBase {
     Groups before = app.db().groups();
     GroupData modifiedGroup = before.iterator().next();
     GroupData group = new GroupData().withId(modifiedGroup.getId())
-            .withName("test10").withHeader("test7").withFooter("test2");
+            .withName("test 0").withHeader("test7").withFooter("test2");
     app.group().modify(group);
     assertEquals(app.group().count(),before.size());
     Groups after = app.db().groups();
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
+    verifyGroupListInUi();
   }
 
   @Test(enabled = false)
