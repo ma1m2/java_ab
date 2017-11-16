@@ -51,6 +51,10 @@ public class GroupData {
     return footer;
   }
 
+  public Contacts getContacts() {
+    return new Contacts(contacts);
+  }
+
   public GroupData withId(int id) {
     this.id = id;
     return this;
@@ -71,8 +75,9 @@ public class GroupData {
     return this;
   }
 
-  public Contacts getContacts() {
-    return new Contacts(contacts);
+  public GroupData inContact(ContactData contact){
+    contacts.add(contact);
+    return this;
   }
 
   @Override

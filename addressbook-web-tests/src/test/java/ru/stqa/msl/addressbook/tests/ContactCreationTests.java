@@ -42,12 +42,13 @@ public class ContactCreationTests extends TestBase{
     Groups groups = app.db().groups();
     app.goTo().homePage();
     Contacts before = app.db().contacts();
-    if (app.group().isThereGroupName(contact.getGroups())){
-      app.contact().creat(contact, true);
-    }else {
-      app.group().create(new GroupData().withName(contact.getGroups()));
-      app.contact().creat(contact, true);
+    if (groups.size() == 0){
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName("test8").withHeader("test8").withFooter("test8"));
+      groups = app.db().groups();
     }
+    ContactData newContact = contact.inGroup(groups.iterator().next());
+    app.contact().creat(newContact, true);
     assertThat(app.contact().count(),equalTo(before.size()+1));
     Contacts after = app.db().contacts();
 
