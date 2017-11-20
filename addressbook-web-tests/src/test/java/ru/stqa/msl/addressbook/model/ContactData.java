@@ -17,53 +17,53 @@ public class ContactData {
 
   @Expose
   @Column(name = "firstname")
-  private String firstName;
+  private String firstName = "";
 
   @Expose
   @Column(name = "lastname")
-  private String lastName;
+  private String lastName = "";
 
   @Expose
   @Column(name = "home")
   @Type(type = "text")
-  private String home;
+  private String home = "";
 
   @Expose
   @Column(name = "mobile")
   @Type(type = "text")
-  private String mobile;
+  private String mobile = "";
 
   @Expose
   @Column(name = "work")
   @Type(type = "text")
-  private String work;
+  private String work = "";
 
   @Transient
   @Expose
-  private String allPhone;
+  private String allPhone = "";
 
   @Expose
   @Column(name = "email")
   @Type(type = "text")
-  private String email;
+  private String email = "";
 
   @Expose
   @Column(name = "email2")
   @Type(type = "text")
-  private String email2;
+  private String email2 = "";
 
   @Expose
   @Column(name = "email3")
   @Type(type = "text")
-  private String email3;
+  private String email3 = "";
 
   @Transient
-  private String allEmail;
+  private String allEmail = "";
 
   @Expose
   @Column(name = "address")
   @Type(type = "text")
-  private String address;
+  private String address = "";
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "address_in_groups"
@@ -209,10 +209,13 @@ public class ContactData {
             ", home='" + home + '\'' +
             ", mobile='" + mobile + '\'' +
             ", work='" + work + '\'' +
+            ", allPhone='" + allPhone + '\'' +
             ", email='" + email + '\'' +
             ", email2='" + email2 + '\'' +
             ", email3='" + email3 + '\'' +
+            ", allEmail='" + allEmail + '\'' +
             ", address='" + address + '\'' +
+            ", groups=" + groups +
             '}';
   }
 
@@ -229,10 +232,13 @@ public class ContactData {
     if (home != null ? !home.equals(that.home) : that.home != null) return false;
     if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
     if (work != null ? !work.equals(that.work) : that.work != null) return false;
+    if (allPhone != null ? !allPhone.equals(that.allPhone) : that.allPhone != null) return false;
     if (email != null ? !email.equals(that.email) : that.email != null) return false;
     if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
     if (email3 != null ? !email3.equals(that.email3) : that.email3 != null) return false;
-    return address != null ? address.equals(that.address) : that.address == null;
+    if (allEmail != null ? !allEmail.equals(that.allEmail) : that.allEmail != null) return false;
+    if (address != null ? !address.equals(that.address) : that.address != null) return false;
+    return groups != null ? groups.equals(that.groups) : that.groups == null;
   }
 
   @Override
@@ -243,10 +249,13 @@ public class ContactData {
     result = 31 * result + (home != null ? home.hashCode() : 0);
     result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
     result = 31 * result + (work != null ? work.hashCode() : 0);
+    result = 31 * result + (allPhone != null ? allPhone.hashCode() : 0);
     result = 31 * result + (email != null ? email.hashCode() : 0);
     result = 31 * result + (email2 != null ? email2.hashCode() : 0);
     result = 31 * result + (email3 != null ? email3.hashCode() : 0);
+    result = 31 * result + (allEmail != null ? allEmail.hashCode() : 0);
     result = 31 * result + (address != null ? address.hashCode() : 0);
+    result = 31 * result + (groups != null ? groups.hashCode() : 0);
     return result;
   }
 }

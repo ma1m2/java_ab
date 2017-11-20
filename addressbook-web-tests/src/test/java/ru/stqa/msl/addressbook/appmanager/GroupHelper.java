@@ -103,6 +103,7 @@ public class GroupHelper extends HelperBase {
   private Groups groupCache = null;
 
   public Groups all() {
+    groupPage();
     if (groupCache!= null){
       return new Groups(groupCache);
     }

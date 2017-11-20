@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.msl.addressbook.model.ContactData;
 import ru.stqa.msl.addressbook.model.Contacts;
+import ru.stqa.msl.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +35,9 @@ public class ContactHelper extends HelperBase {
         Assert.assertTrue(contactData.getGroups().size() == 1);
         new Select(wd.findElement(By.name("new_group")))
                 .selectByVisibleText(contactData.getGroups().iterator().next().getName());
-      } else {
-        Assert.assertFalse(isElementPresent(By.name("new_group")));
       }
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
 
@@ -204,5 +205,29 @@ public class ContactHelper extends HelperBase {
     return new ContactData().withFirstName(firstName).withLastName(lastName)
             .withHome(home).withMobile(mobile).withWork(work)
             .withEmail(email).withEmail2(email2).withEmail3(email3).withAddress(address);
+  }
+
+  public void initAddingContactInGroup(int id) {
+    wd.findElement(By.cssSelector(String.format("input[value='%s']", id))).click();
+  }
+
+  public void submitContactInGroups() {
+    wd.findElement(By.name("add")).click();
+  }
+
+  public void choseGroup(String id) {
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(id);
+  }
+
+  public Boolean isSubmitPageConAddGr(){
+    return wd.findElement(By.cssSelector("div.msgbox")).getText().substring(0,11).equals("Users added");
+  }
+
+ public void addInGroup(GroupData group, ContactData contact) {
+    homePage();
+    initAddingContactInGroup(contact.getId());
+    choseGroup(String.valueOf(group.getId()));
+    submitContactInGroups();
+    Assert.assertTrue(isSubmitPageConAddGr());
   }
 }
