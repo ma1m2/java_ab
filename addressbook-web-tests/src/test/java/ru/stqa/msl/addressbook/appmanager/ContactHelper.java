@@ -215,19 +215,41 @@ public class ContactHelper extends HelperBase {
     wd.findElement(By.name("add")).click();
   }
 
-  public void choseGroup(String id) {
+  public void choseGroupToAddContact(String id) {
     new Select(wd.findElement(By.name("to_group"))).selectByValue(id);
   }
 
   public Boolean isSubmitPageConAddGr(){
-    return wd.findElement(By.cssSelector("div.msgbox")).getText().substring(0,11).equals("Users added");
+    return wd.findElement(By.cssSelector("div.msgbox"))
+            .getText().substring(0,11).equals("Users added");
   }
 
  public void addInGroup(GroupData group, ContactData contact) {
     homePage();
     initAddingContactInGroup(contact.getId());
-    choseGroup(String.valueOf(group.getId()));
+    choseGroupToAddContact(String.valueOf(group.getId()));
     submitContactInGroups();
     Assert.assertTrue(isSubmitPageConAddGr());
+  }
+
+  public void removeContactFromGroup(GroupData group, ContactData contact) {
+    homePage();
+    choseGroupToRemoveContact(group, contact);
+    submitContactRemoveFromGroups();
+    Assert.assertTrue(isSubmitPageRemoveConFromGr());
+  }
+
+  private boolean isSubmitPageRemoveConFromGr() {
+    return wd.findElement(By.cssSelector("div.msgbox"))
+            .getText().substring(0,13).equals("Users removed");
+  }
+
+  private void submitContactRemoveFromGroups() {
+    wd.findElement(By.name("remove")).click();
+  }
+
+  private void choseGroupToRemoveContact(GroupData group, ContactData contact) {
+    new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+    selectContactById(contact.getId());
   }
 }
