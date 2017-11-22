@@ -1,11 +1,6 @@
 package ru.stqa.msl.mantis.appmanager;
 
-/*import org.apache.http.impl.client.CloseableHttpClient;
-import org.openqa.selenium.remote.http.HttpClient;
-import sun.net.www.http.HttpClient;*/
-
 import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -17,7 +12,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
