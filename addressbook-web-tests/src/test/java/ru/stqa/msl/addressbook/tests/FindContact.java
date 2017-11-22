@@ -34,3 +34,12 @@ public class FindContact extends TestBase{
     }
   }
 }
+
+/* Alexei Barancev
+  Groups groups = app.db().groups();
+  Contacts contacts = app.db().contacts();
+  ContactData chosenContact = contacts.stream()
+          .filter(contact -> contact.getGroups().size() < groups.size())
+          .findAny().orElseGet(() -> createNewContact());
+groups.removeAll(chosenContact.getGroups());
+        GroupData chosenGroup = groups.iterator().next();*/
