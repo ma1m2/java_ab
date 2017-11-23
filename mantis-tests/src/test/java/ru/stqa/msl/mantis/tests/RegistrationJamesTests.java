@@ -17,7 +17,7 @@ public class RegistrationJamesTests extends TestBase{
     long now = System.currentTimeMillis();
     String user = String.format("user%s", now);
     String password = "password";
-    String email = String.format("user%s@localhost.localdomain", now);
+    String email = String.format("user%s@localhost", now);
     app.james().creatUser(user, password);
     app.registration().start(user, email);
     List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000);
